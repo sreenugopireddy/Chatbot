@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 
 
-client = genai.Client(api_key="AIzaSyCpSZxDTRN35JizlttaVaNUSTE-6JOqfSg")
+client = genai.Client(api_key="")
 
 
 # simple in-memory chat history (per server run)
