@@ -1,169 +1,173 @@
-# 🧠 Luma — AI Research Chatbot (Flask + Gemini)
+# Luma — AI Research Chatbot
 
-Luma is a web-based AI chatbot built using **Flask** and **Google Gemini API**.  
-It provides conversational answers and can be switched into **Research Mode** to generate structured, analytical, report-style responses.
-
-The project includes a modern chat UI and a backend research assistant engine with contextual memory.
+A web-based conversational AI built with **Flask** and the **Google Gemini API**. Luma handles everyday chat and switches into a structured **Research Mode** for analytical, report-style responses — complete with contextual memory across the conversation.
 
 ---
 
-## 🚀 Features
+## Features
 
-- 💬 Real-time AI chat interface
-- 🔬 Research Mode for structured, in-depth answers
-- 🧠 Multi-turn conversation memory
-- 🎨 Dark / Light theme toggle
-- ⌨️ Typing animation + markdown formatting
-- 📋 Copy message support
-- 🧹 One-click chat reset
-- 🧩 Suggestion prompts
-- 🔒 API key via environment variables (secure)
-
----
-
-## 🏗️ Tech Stack
-
-**Frontend**
-- HTML5
-- CSS3 (custom theme system)
-- Vanilla JavaScript
-- Font Awesome icons
-
-**Backend**
-- Python
-- Flask
-- Google Gemini API (`google-genai`)
+- Real-time AI chat interface
+- Research Mode for structured, in-depth responses (methodology, analysis, conclusions)
+- Multi-turn conversation memory
+- Dark / Light theme toggle
+- Typing animation with Markdown formatting
+- Copy-to-clipboard for any message
+- One-click chat reset
+- Suggestion prompt chips
+- API key loaded from environment variables (never hardcoded)
 
 ---
 
-## 📂 Project Structure
+## Tech Stack
 
-Chatbot/
-│
-├── main.py # Flask backend server
+**Frontend** — HTML5, CSS3 (custom theme system), Vanilla JavaScript, Font Awesome
+
+**Backend** — Python, Flask, Google Gemini API (`google-genai`)
+
+---
+
+## Project Structure
+
+```
+luma-chatbot/
+├── main.py              # Flask backend
 ├── templates/
-│ └── index.html # Chat UI
-├── static/ # (optional) CSS / assets
-├── README.md
-└── requirements.txt
-
+│   └── index.html       # Chat UI
+├── static/              # CSS and assets (optional)
+├── requirements.txt
+└── README.md
+```
 
 ---
 
-## ⚙️ Installation
+## Getting Started
 
-### 1️⃣ Clone Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/yourusername/luma-chatbot.git
 cd luma-chatbot
-2️⃣ Create Virtual Environment
+```
+
+### 2. Create and activate a virtual environment
+
+```bash
 python -m venv venv
-source venv/bin/activate     # Mac/Linux
-venv\Scripts\activate        # Windows
-3️⃣ Install Dependencies
+
+# macOS / Linux
+source venv/bin/activate
+
+# Windows
+venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
+```bash
 pip install flask google-genai
-(or use requirements.txt if you create one)
+```
 
-4️⃣ Set Gemini API Key
-Create environment variable:
+Or if you have a `requirements.txt`:
 
-Windows PowerShell
+```bash
+pip install -r requirements.txt
+```
 
-setx GEMINI_API_KEY "YOUR_API_KEY"
-Mac/Linux
+### 4. Set your Gemini API key
 
-export GEMINI_API_KEY=YOUR_API_KEY
-Restart terminal after setting.
+**macOS / Linux**
+```bash
+export GEMINI_API_KEY=your_api_key_here
+```
 
-5️⃣ Run App
+**Windows (PowerShell)**
+```powershell
+setx GEMINI_API_KEY "your_api_key_here"
+```
+
+Restart your terminal after setting the variable.
+
+### 5. Run the app
+
+```bash
 python main.py
-Open browser:
+```
 
-http://localhost:2005
-🔬 Research Mode
-Research Mode changes the model prompt behavior to produce:
+Then open your browser at `http://localhost:2005`.
 
-structured explanations
+---
 
-technical depth
+## Research Mode
 
-methodology sections
+Toggle Research Mode with the flask icon in the chat header. When active, the model's prompt template shifts to produce:
 
-conclusions
+- Structured explanations with clear sections
+- Technical depth appropriate to the topic
+- Methodology and approach breakdowns
+- Conclusions and identified limitations
+- Analytical formatting throughout
 
-limitations
+---
 
-analytical formatting
+## How It Works
 
-Toggle Research Mode using the flask icon button in the chat header.
+Each request to `/chat`:
 
-🧠 Backend Logic Overview
-The chatbot backend:
+1. Receives the user's message and a `research_mode` flag
+2. Selects the appropriate prompt template
+3. Injects recent conversation context for continuity
+4. Sends the composed prompt to the Gemini model
+5. Returns the formatted response and stores it in short-term memory
 
-receives user message via /chat endpoint
+---
 
-optionally activates research prompt template
+## API Reference
 
-injects recent conversation context
+**POST** `/chat`
 
-sends structured prompt to Gemini model
-
-returns formatted response
-
-stores short conversation memory
-
-📡 API Endpoint
-POST /chat
-Request
-
+**Request body**
+```json
 {
   "message": "Explain RAG architecture",
   "research_mode": true
 }
-Response
+```
 
+**Response**
+```json
 {
   "reply": "Structured research-style answer..."
 }
-🔒 Security Notes
-API keys are not stored in source code
+```
 
-Use environment variables
+---
 
-If a key is ever exposed → rotate immediately
+## Security
 
-Do not commit .env files
+- API keys are never stored in source code
+- Always use environment variables or a secrets manager
+- If a key is accidentally exposed, rotate it immediately
+- Do not commit `.env` files — add them to `.gitignore`
 
-🧪 Example Use Cases
-Research topic exploration
+---
 
-Literature review drafts
+## Example Use Cases
 
-Technical concept breakdown
+- Exploring unfamiliar research topics
+- Drafting literature review sections
+- Breaking down technical concepts (AI/ML, systems, etc.)
+- Planning experiments or study designs
+- Generating structured summaries and reports
 
-Experiment planning
+---
 
-AI/ML explanations
+## Roadmap
 
-Structured report generation
-
-🛠️ Future Improvements
-Planned upgrades:
-
-PDF research paper reader
-
-citation generator
-
-web search integration
-
-multi-chat sessions
-
-vector memory store
-
-paper summarization
-
-dataset suggestion engine
-
-export chat to PDF/Markdown
-
+- PDF research paper ingestion
+- Automatic citation generation
+- Live web search integration
+- Multi-session chat management
+- Vector-based long-term memory
+- Paper summarization pipeline
+- Dataset discovery and suggestion
+- Export chat as PDF or Markdown
